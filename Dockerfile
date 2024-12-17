@@ -8,8 +8,6 @@ COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-# RUN pip install numpy pillow fastapi uvicorn python-multipart opencv-python tensorflow
-
 COPY app/ .
 
 EXPOSE 8080
