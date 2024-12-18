@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import numpy as np
 import tensorflow as tf
+import os
 from helper import preprocess_image
 
 app = FastAPI()
@@ -30,6 +31,10 @@ CLASS_NAMES = ["Real", "AI Generated"]
 async def ping():
     return "Hello, I am alive"
 
+@app.get("/")
+async def ping():
+    return "Model v2"
+
 
 @app.post("/predict")
 async def predict(
@@ -40,10 +45,10 @@ async def predict(
     
     predictions = MODEL.predict(img_batch)
 
-    print(predictions)
+    # print(predictions)
 
     predicted_class = CLASS_NAMES[np.argmax(predictions[0])]
-    print(np.argmax(predictions[0]))
+    # print(np.argmax(predictions[0]))
     confidence = round(np.max(predictions[0])*100, 2)
     result = {
         'class': predicted_class,
@@ -56,4 +61,5 @@ async def predict(
     return result
 
 if __name__ == "__main__":
+    print(os.environ["BUCKET_NAME"])
     uvicorn.run(app, host='0.0.0.0', port=8080)

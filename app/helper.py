@@ -26,7 +26,7 @@ def preprocess_image(image, output_size=(224, 224)):
     if img is None:
         raise ValueError(f"Unable to load image from {image}")
 
-    print(img.shape)
+    # print(img.shape)
     # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     # Get original dimensions
@@ -48,4 +48,4 @@ def preprocess_image(image, output_size=(224, 224)):
 
     # Overlay the resized image onto the canvas
     canvas[top:top + new_h, left:left + new_w] = resized_img
-    return canvas
+    return canvas / 255
