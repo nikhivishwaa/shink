@@ -40,13 +40,20 @@ async def predict(
     
     predictions = MODEL.predict(img_batch)
 
+    print(predictions)
+
     predicted_class = CLASS_NAMES[np.argmax(predictions[0])]
+    print(np.argmax(predictions[0]))
     confidence = round(np.max(predictions[0])*100, 2)
-    return {
+    result = {
         'class': predicted_class,
         'confidence': float(confidence),
         'model': 'v2'
     }
+
+    print(result)
+
+    return result
 
 if __name__ == "__main__":
     uvicorn.run(app, host='0.0.0.0', port=8080)

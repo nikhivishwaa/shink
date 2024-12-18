@@ -26,6 +26,7 @@ def preprocess_image(image, output_size=(224, 224)):
     if img is None:
         raise ValueError(f"Unable to load image from {image}")
 
+    print(img.shape)
     # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     # Get original dimensions
