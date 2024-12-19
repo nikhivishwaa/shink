@@ -9,6 +9,7 @@ import numpy as np
 import tensorflow as tf
 import os
 from helper import preprocess_image
+from utils.gemini import classification
 
 app = FastAPI()
 
@@ -58,6 +59,15 @@ async def predict(
 
     print(result)
 
+    return result
+
+@app.post("/gemini")
+async def gemini(
+    file: UploadFile = File(...)
+):
+    
+    result = await classification(await file.read())
+    
     return result
 
 if __name__ == "__main__":

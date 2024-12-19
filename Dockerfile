@@ -15,8 +15,9 @@ WORKDIR /home/app
 # Install Python dependencies
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+pip install --no-cache-dir -r requirements.txt
 
+RUN pip install --no-cache-dir google-cloud-storage
 # Create a non-root user for security
 RUN useradd -m rider
 RUN chown -R rider:rider /home/app
