@@ -39,17 +39,17 @@ class References:
                 return self.messages
             
             # adding real images as class_0
-            blobs = self._bucket.list_blobs(prefix=secrets.FOLDER_NAME+'/0/')
+            blobs = self._bucket.bucket.list_blobs(prefix=secrets.FOLDER_NAME+'/0/')
             for blob in blobs:
                 if blob.path.endswith('.jpg'):
-                    self.messages.append(self.load_image(blob))
+                    self.messages.append(self._bucket.load_image(blob))
             self.messages.append('label: class_0')
 
             # adding AI Generated images as class_1
-            blobs = self._bucket.list_blobs(prefix=secrets.FOLDER_NAME+'/1/')
+            blobs = self._bucket.bucket.list_blobs(prefix=secrets.FOLDER_NAME+'/1/')
             for blob in blobs:
                 if blob.path.endswith('.jpg'):
-                    self.messages.append(self.load_image(blob))
+                    self.messages.append(self._bucket.load_image(blob))
             self.messages.append('label: class_1')
             self.ready = True
             print('References created successfully.')

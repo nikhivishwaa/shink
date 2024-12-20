@@ -1,6 +1,7 @@
 import google.generativeai as genai
 from utils.prompts import system_prompt, prompt
 from utils.connection import secrets
+import json
 
 
 genai.configure(api_key=secrets.GEMINI_API_KEY)
@@ -18,9 +19,15 @@ classification_model = genai.GenerativeModel(
 
 
 async def classification(image):
-    response = await classification_model.generate_content(
+    response = classification_model.generate_content(
         contents=prompt(image=image)
     )
     response_json = json.loads(response.text)
     print(response_json)
+    results = {}
+    result = response_json['output'][0]
+    del result['image_id']
+    result['class'] = 'Real' if result['label'].endwith('0') else 'AI Generated'
+    result['model'] = 'gemini flash 2.0'
+    del result['label']
     return response_json
