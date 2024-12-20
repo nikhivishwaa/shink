@@ -24,10 +24,9 @@ async def classification(image):
     )
     response_json = json.loads(response.text)
     print(response_json)
-    results = {}
     result = response_json['output'][0]
     del result['image_id']
     result['class'] = 'Real' if result['label'].endswith('0') else 'AI Generated'
     result['model'] = 'gemini flash 2.0'
     del result['label']
-    return response_json
+    return result
